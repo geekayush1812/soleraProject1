@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import React, {useState, useCallback, useRef, useEffect} from 'react';
+import {View, StyleSheet, Text, Animated, Easing} from 'react-native';
 import Header from '../../components/header/header.component';
 import RoundedImageHolder from '../../components/RoundedImageHolder/roundedImageHolder.component';
 import BottomNavigation from '../../components/BottomNavigation/BottomNavigation.component';
@@ -9,8 +9,36 @@ import BasicCard from '../../components/BasicCard/basicCard.component';
 
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import CardContent from './components/cardContent.component';
+import ScheduleAppointment from './components/scheduleAppointment.component';
 
 function FindDoctorScreen({navigation}) {
+  const [showPopup, setShowPopup] = useState(false);
+  const PopupTranslateY = useRef(new Animated.Value(0)).current;
+  const onPress = () => {
+    if (showPopup) {
+      PopupTranslateY.setValue(0);
+      Animated.sequence([
+        Animated.timing(PopupTranslateY, {
+          toValue: 1,
+          easing: Easing.bezier(0.52, 0.5, 0.08, 0.78),
+          duration: 800,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    } else {
+      PopupTranslateY.setValue(1);
+      Animated.sequence([
+        Animated.timing(PopupTranslateY, {
+          toValue: 0,
+          easing: Easing.bezier(0.52, 0.5, 0.08, 0.78),
+          duration: 800,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    }
+    setShowPopup(!showPopup);
+  };
+
   return (
     <View style={FindDoctorScreenStyles.Container}>
       <Header
@@ -140,6 +168,9 @@ function FindDoctorScreen({navigation}) {
                 },
               }}>
               <CardContent
+                onPress={() => {
+                  onPress();
+                }}
                 DoctorName="Dr.Smith"
                 rating={5}
                 Specialization="Orthodontist"
@@ -159,7 +190,11 @@ function FindDoctorScreen({navigation}) {
           </View>
         </View>
       </ScrollView>
-      <BottomNavigation />
+      <BottomNavigation PopupTranslateY={PopupTranslateY} />
+      <ScheduleAppointment
+        PopupTranslateY={PopupTranslateY}
+        onPress={onPress}
+      />
     </View>
   );
 }

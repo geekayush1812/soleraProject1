@@ -18,7 +18,7 @@ function CustomButton({title, style, onPress, disabled}) {
 }
 const CustomButtonStyles = StyleSheet.create({
   Container: {
-    flex: 4,
+    // flex: 4,
     padding: 25,
     backgroundColor: '#ddd',
     justifyContent: 'center',

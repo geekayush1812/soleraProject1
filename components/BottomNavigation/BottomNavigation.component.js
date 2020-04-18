@@ -1,15 +1,34 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-function BottomNavigation() {
+function BottomNavigation({PopupTranslateY}) {
   return (
-    <View style={BottomNavigationStyles.Container}>
+    <Animated.View
+      style={[
+        BottomNavigationStyles.Container,
+        {
+          transform: [
+            {
+              translateY: PopupTranslateY.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 100],
+              }),
+            },
+            {
+              rotateX: PopupTranslateY.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['0deg', '180deg'],
+              }),
+            },
+          ],
+        },
+      ]}>
       <Icon name="home" size={30} color="#6231CB" />
       <Icon name="envelope" size={30} color="#D8D8D8" />
       <Icon name="gear" size={30} color="#D8D8D8" />
       <Icon name="heart" size={30} color="#D8D8D8" />
-    </View>
+    </Animated.View>
   );
 }
 
@@ -25,6 +44,7 @@ const BottomNavigationStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+    zIndex: -10,
   },
 });
 export default BottomNavigation;
