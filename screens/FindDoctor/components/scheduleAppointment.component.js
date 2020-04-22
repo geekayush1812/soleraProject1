@@ -90,17 +90,45 @@ class ScheduleAppointment extends React.Component {
           setTimeout(() => {
             resolve();
           }, 1000);
-        }).then(() => {
-          this.MonthScrollerRef.scrollToIndex({
-            index: this.state.monthIndex,
+        })
+          .then(() => {
+            this.MonthScrollerRef.scrollToIndex({
+              index: this.state.monthIndex,
+            });
+            this.DateScrollerRef.scrollToIndex({
+              index:
+                this.state.selectedDate > 5
+                  ? this.state.selectedDate - 5
+                  : this.state.selectedDate - 1,
+            });
+          })
+          .catch((e) => {
+            console.log(e);
           });
-          this.DateScrollerRef.scrollToIndex({
-            index: this.state.selectedDate - 5,
-          });
-        });
       },
     );
   }
+  onScrollToIndexFailed = () => {
+    new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        resolve();
+      }, 1000);
+    })
+      .then(() => {
+        this.MonthScrollerRef.scrollToIndex({
+          index: this.state.monthIndex,
+        });
+        this.DateScrollerRef.scrollToIndex({
+          index:
+            this.state.selectedDate > 5
+              ? this.state.selectedDate - 5
+              : this.state.selectedDate - 1,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   calculateMonth = () => {
     let date = new Date();
     let year = date.getFullYear();
@@ -165,6 +193,16 @@ class ScheduleAppointment extends React.Component {
         return 'th';
     }
   };
+  onDayPress = () => {
+    this.setState({selectedDate: item.date}, () =>
+      this.DateScrollerRef.scrollToIndex({
+        index:
+          this.state.selectedDate > 5
+            ? this.state.selectedDate - 5
+            : this.state.selectedDate - 1,
+      }),
+    );
+  };
   render() {
     const {PopupTranslateY, onPress} = this.props;
     return (
@@ -207,6 +245,7 @@ class ScheduleAppointment extends React.Component {
                   this.MonthScrollerRef = ref;
                 }}
                 scrollEnabled={false}
+                onScrollToIndexFailed={this.onScrollToIndexFailed}
                 horizontal={true}
                 data={this.state.months}
                 style={{
@@ -245,6 +284,7 @@ class ScheduleAppointment extends React.Component {
               ref={(ref) => {
                 this.DateScrollerRef = ref;
               }}
+              onScrollToIndexFailed={this.onScrollToIndexFailed}
               horizontal={true}
               data={this.state.dayNdate}
               keyExtractor={(item) => `${item.date}`}
@@ -254,8 +294,9 @@ class ScheduleAppointment extends React.Component {
                     this.setState({selectedDate: item.date}, () =>
                       this.DateScrollerRef.scrollToIndex({
                         index:
-                          this.state.selectedDate -
-                          (this.state.selectedDate > 5 ? 5 : 0),
+                          this.state.selectedDate > 5
+                            ? this.state.selectedDate - 5
+                            : this.state.selectedDate - 1,
                       }),
                     )
                   }>

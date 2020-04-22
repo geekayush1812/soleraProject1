@@ -10,6 +10,8 @@ import BasicCard from '../../components/BasicCard/basicCard.component';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import CardContent from './components/cardContent.component';
 import ScheduleAppointment from './components/scheduleAppointment.component';
+import ToggleButton from '../../components/ToggleButton/toggleButton.component';
+import ContentContainer from '../../components/ContentContainer/contentContainer.component';
 
 function FindDoctorScreen({navigation}) {
   const [showPopup, setShowPopup] = useState(false);
@@ -50,18 +52,14 @@ function FindDoctorScreen({navigation}) {
         <Text style={FindDoctorScreenStyles.HeaderPrimaryText}>
           Find a doctor
         </Text>
-        <View style={FindDoctorScreenStyles.HeaderToggleSwitchContainer}>
-          <Text style={FindDoctorScreenStyles.HeaderToggleSwitchText}>NOW</Text>
-          <View style={FindDoctorScreenStyles.HeaderToggleSwitchDot}></View>
-        </View>
+        <ToggleButton text="NOW" />
       </Header>
-      <View
-        style={[
-          FindDoctorScreenStyles.Content,
-          {
+      <ContentContainer
+        style={{
+          Container: {
             flex: 5,
           },
-        ]}>
+        }}>
         <ScrollView style={{marginTop: 8}}>
           <SearchBar />
           <ScrollView
@@ -71,7 +69,6 @@ function FindDoctorScreen({navigation}) {
               marginRight: 'auto',
               width: '90%',
             }}
-            pagingEnabled={true}
             contentContainerStyle={FindDoctorScreenStyles.ContentCardContainer}>
             <BasicCard
               style={{
@@ -223,7 +220,7 @@ function FindDoctorScreen({navigation}) {
             </View>
           </View>
         </ScrollView>
-      </View>
+      </ContentContainer>
       <BottomNavigation PopupTranslateY={PopupTranslateY} />
       <ScheduleAppointment
         PopupTranslateY={PopupTranslateY}
@@ -245,42 +242,19 @@ const FindDoctorScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: -10,
   },
-  HeaderToggleSwitchContainer: {
-    alignSelf: 'center',
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    padding: 2,
-    width: 70,
-    borderRadius: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 15,
-  },
-  HeaderToggleSwitchText: {
-    color: '#6231CB',
-    fontSize: 10,
-    fontWeight: 'bold',
-    marginLeft: 5,
-  },
-  HeaderToggleSwitchDot: {
-    height: 20,
-    width: 20,
-    borderRadius: 25,
-    backgroundColor: '#6231CB',
-  },
-  Content: {
-    // position: 'absolute',
-    width: '100%',
-    backgroundColor: '#fefefe',
-    // bottom: 0,
-    borderTopLeftRadius: 38,
-    borderTopRightRadius: 38,
-    transform: [
-      {
-        translateY: -60,
-      },
-    ],
-  },
+  // Content: {
+  //   // position: 'absolute',
+  //   width: '100%',
+  //   backgroundColor: '#fefefe',
+  //   // bottom: 0,
+  //   borderTopLeftRadius: 38,
+  //   borderTopRightRadius: 38,
+  //   transform: [
+  //     {
+  //       translateY: -60,
+  //     },
+  //   ],
+  // },
   ContentCardContainer: {
     justifyContent: 'space-between',
     alignItems: 'center',

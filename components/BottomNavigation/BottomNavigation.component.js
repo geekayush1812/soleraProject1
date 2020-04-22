@@ -10,16 +10,20 @@ function BottomNavigation({PopupTranslateY}) {
         {
           transform: [
             {
-              translateY: PopupTranslateY.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 100],
-              }),
+              translateY: PopupTranslateY
+                ? PopupTranslateY.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 100],
+                  })
+                : 0,
             },
             {
-              rotateX: PopupTranslateY.interpolate({
-                inputRange: [0, 1],
-                outputRange: ['0deg', '180deg'],
-              }),
+              rotateX: PopupTranslateY
+                ? PopupTranslateY.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ['0deg', '180deg'],
+                  })
+                : 0,
             },
           ],
         },

@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import RoundedImageHolder from '../../../components/RoundedImageHolder/roundedImageHolder.component';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
