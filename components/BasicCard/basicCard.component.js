@@ -1,11 +1,15 @@
 import React, {Children} from 'react';
 import {View, StyleSheet, Text, Switch, Image} from 'react-native';
 
-function BasicCard({children, style}) {
+function BasicCard({children, style, active}) {
+  let bg_color = active ? '#6231CB' : '#fff';
   return (
     <View
       style={[
         BasicCardStyles.CardContainer,
+        {
+          backgroundColor: bg_color,
+        },
         style ? style.CardContainer : null,
       ]}>
       {children}
@@ -16,7 +20,6 @@ function BasicCard({children, style}) {
 const BasicCardStyles = StyleSheet.create({
   CardContainer: {
     elevation: 5,
-    backgroundColor: '#fff',
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',

@@ -11,6 +11,7 @@ import TransactionSummaryScreen from './screens/TransactionSummary/transactionSu
 import FindDoctorScreen from './screens/FindDoctor/findDoctor.screen';
 import DoctorDetailsScreen from './screens/DoctorDetailsScreen/doctorDetails.screen';
 import AppointmentScreen from './screens/Appointment/appointment.screen';
+import MessagesScreen from './screens/Messages/Messages.screen';
 
 const AppNavigator = createStackNavigator();
 
@@ -22,25 +23,26 @@ function App() {
         <AppNavigator.Navigator
           screenOptions={{
             headerShown: false,
-          }}>
+          }}
+          initialRouteName="DoctorDetails">
           {/* <AppNavigator.Screen
             name="Transaction"
             component={TransactionScreen}
-          />
+          /> */}
           <AppNavigator.Screen
             name="ProcessingMoney"
             component={ProcessingMoneyScreen}
           />
-          <AppNavigator.Screen
+          {/* <AppNavigator.Screen
             name="TransactionSummary"
             component={TransactionSummaryScreen}
-          />
+          /> */}
+          <AppNavigator.Screen name="Messages" component={MessagesScreen} />
           <AppNavigator.Screen name="FindDoctor" component={FindDoctorScreen} />
           <AppNavigator.Screen
             name="DoctorDetails"
             component={DoctorDetailsScreen}
           />
-          */}
           <AppNavigator.Screen
             name="Appointment"
             component={AppointmentScreen}

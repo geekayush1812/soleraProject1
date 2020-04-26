@@ -2,21 +2,21 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TextInput} from 'react-native-gesture-handler';
-import FilterIcon from '../../assets/svg/filter.svg';
+import FilterIcon from '../../assets/svg/filter_icon.svg';
 
 function SearchBar() {
   return (
     <View style={SearchBarStyles.Container}>
       <View style={SearchBarStyles.ContainerLeftWrapper}>
-        <Icon name="search" size={24} />
+        <Icon name="search" size={20} />
         <TextInput
-          style={{marginTop: 5, marginLeft: 5, fontSize: 18}}
+          style={{marginLeft: 5, fontSize: 16}}
           textContentType="name"
-          placeholder="Seach your symptoms"
+          placeholder="Seach your patients"
         />
       </View>
       <View style={SearchBarStyles.ContainerRightWrapperFilterContainer}>
-        <FilterIcon height={24} width={24} />
+        <FilterIcon height={20} width={20} />
       </View>
     </View>
   );
@@ -34,7 +34,7 @@ const SearchBarStyles = StyleSheet.create({
     borderRadius: 20,
     padding: 2,
     marginBottom: 20,
-    marginTop: 10,
+    marginTop: 20,
   },
   ContainerLeftWrapper: {
     flex: 6,

@@ -1,60 +1,66 @@
 import React from 'react';
 import {View, StyleSheet, Image, Text, useWindowDimensions} from 'react-native';
-import NavigationTopCustom from '../NavigationTopCustom/navigationTopCustom.component';
+import TopNavBar from '../TopNavBar/TopNavBar';
+import LinearGradient from 'react-native-linear-gradient';
+import {color} from '../../config/styles/color';
+import Overlay_circle from '../../assets/svg/header_overlay_circle.svg';
+import Header_curve from '../../assets/svg/header_curve.svg';
+import Overlay_gradient from '../../assets/svg/header_overlay_gradient.svg';
+import Overlay_plus from '../../assets/svg/header_overlay_plus.svg';
+import Overlay_tablet from '../../assets/svg/header_overlay_tablet.svg';
+import Overlay_tri from '../../assets/svg/header_overlay_tri.svg';
+import Overlay_tri_hollow from '../../assets/svg/header_overlay_tri_hollow.svg';
 
-function Header({ProfileNavPic, children, style, hideOverlay}) {
+function Header({LeftNavComp, children, style}) {
   const dimen = useWindowDimensions();
   return (
-    <View
+    <LinearGradient
+      colors={[color.header_grad_one, color.header_grad_two]}
+      useAngle={true}
+      angle={-180}
       style={[
         HeaderStyles.Container,
         {height: dimen.height * 0.4},
         style ? style.Container : null,
       ]}>
-      {hideOverlay ? null : (
-        <>
-          <Image
-            source={require('../../assets/png/overlay-left.png')}
-            style={HeaderStyles.LeftOverlay}
-          />
-          <Image
-            source={require('../../assets/png/overlay-right.png')}
-            style={HeaderStyles.RightOverlay}
-          />
-        </>
-      )}
-      <Image
-        source={require('../../assets/png/semicirclepink.png')}
-        style={HeaderStyles.SemiPink}
+      <TopNavBar LeftNavComp={LeftNavComp} />
+
+      <Overlay_circle
+        style={[HeaderOverlayStyles.common, HeaderOverlayStyles.Overlay_circle]}
       />
-      <Image
-        source={require('../../assets/png/semicircleblue.png')}
-        style={HeaderStyles.SemiBlue}
+      <Header_curve
+        style={[HeaderOverlayStyles.common, HeaderOverlayStyles.Header_curve]}
       />
-      <Image
-        source={require('../../assets/png/squareping.png')}
-        style={HeaderStyles.SquarePink}
+      <Overlay_gradient
+        style={[
+          HeaderOverlayStyles.common,
+          HeaderOverlayStyles.Overlay_gradient,
+        ]}
       />
-      <Image
-        source={require('../../assets/png/squareblue.png')}
-        style={HeaderStyles.SquareBlue}
+      <Overlay_plus
+        style={[HeaderOverlayStyles.common, HeaderOverlayStyles.Overlay_plus]}
       />
-      <NavigationTopCustom ProfileNavPic={ProfileNavPic} />
+      <Overlay_tablet
+        style={[HeaderOverlayStyles.common, HeaderOverlayStyles.Overlay_tablet]}
+      />
+      <Overlay_tri
+        style={[HeaderOverlayStyles.common, HeaderOverlayStyles.Overlay_tri]}
+      />
+      <Overlay_tri_hollow
+        style={[
+          HeaderOverlayStyles.common,
+          HeaderOverlayStyles.Overlay_tri_hollow,
+        ]}
+      />
+
       <View
         style={[
           HeaderStyles.ContentContainer,
           style ? style.ChildContainer : null,
         ]}>
-        {!children ? (
-          <>
-            <Text style={HeaderStyles.SecondaryText}>Total balance</Text>
-            <Text style={HeaderStyles.PrimaryText}>$12,698</Text>
-          </>
-        ) : (
-          children
-        )}
+        {children ? children : null}
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -62,58 +68,47 @@ const HeaderStyles = StyleSheet.create({
   Container: {
     width: '100%',
     backgroundColor: '#6E21D1',
-    borderBottomRightRadius: 38,
-    borderBottomLeftRadius: 38,
     position: 'relative',
-  },
-  LeftOverlay: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    zIndex: -10,
-  },
-  RightOverlay: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: -10,
-  },
-  SemiBlue: {
-    position: 'absolute',
-    top: '50%',
-    right: '6%',
-  },
-  SemiPink: {
-    position: 'absolute',
-    top: '40%',
-    left: '6%',
-  },
-  SquareBlue: {
-    position: 'absolute',
-    top: '20%',
-    left: '30%',
-  },
-  SquarePink: {
-    position: 'absolute',
-    top: '15%',
-    right: '30%',
   },
   ContentContainer: {
     alignSelf: 'center',
     top: '30%',
   },
-  SecondaryText: {
-    color: '#d1d1d1',
-    textAlign: 'center',
-    fontSize: 16,
-    marginBottom: 5,
+});
+
+const HeaderOverlayStyles = StyleSheet.create({
+  common: {
+    position: 'absolute',
+    opacity: 0.75,
   },
-  PrimaryText: {
-    color: '#fefefe',
-    textAlign: 'center',
-    fontSize: 38,
-    fontWeight: 'bold',
-    letterSpacing: 2,
+  Overlay_circle: {
+    bottom: '30%',
+    left: '20%',
+  },
+  Header_curve: {
+    top: 0,
+    right: 0,
+  },
+  Overlay_gradient: {
+    top: 0,
+    left: -50,
+    opacity: 0.95,
+  },
+  Overlay_plus: {
+    left: '40%',
+    top: '20%',
+  },
+  Overlay_tablet: {
+    right: '5%',
+    bottom: '30%',
+  },
+  Overlay_tri: {
+    top: '5%',
+    right: '25%',
+  },
+  Overlay_tri_hollow: {
+    top: '25%',
+    left: '5%',
   },
 });
 export default Header;

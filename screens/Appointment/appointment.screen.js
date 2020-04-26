@@ -1,5 +1,15 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
-import {View, StyleSheet, Text, Animated, Easing} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Animated,
+  Easing,
+  Platform,
+  UIManager,
+  LayoutAnimation,
+  InteractionManager,
+} from 'react-native';
 import Header from '../../components/header/header.component';
 
 import RoundedImageHolder from '../../components/RoundedImageHolder/roundedImageHolder.component';
@@ -10,6 +20,13 @@ import TimelineContainer from './component/timelineContainer.component';
 import MonthOfCalendar from './component/MonthOfCalendar.component';
 import BottomNavigation from '../../components/BottomNavigation/BottomNavigation.component';
 
+import NavBackCustom from '../../assets/svg/nav_back_custom.svg';
+
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 function AppointmentScreen() {
   const [timeline, setTimeline] = useState(1);
   const [tabIndex, settabIndex] = useState(0);
@@ -67,14 +84,16 @@ function AppointmentScreen() {
   const onTapTab0 = useCallback(
     function () {
       if (tabIndex === 1) {
-        Animated.sequence([
-          Animated.timing(tabIndexPos, {
-            toValue: 0,
-            easing: Easing.back(),
-            duration: 500,
-            useNativeDriver: false,
-          }),
-        ]).start(() => settabIndex(0));
+        InteractionManager.runAfterInteractions(() => {
+          Animated.sequence([
+            Animated.timing(tabIndexPos, {
+              toValue: 0,
+              easing: Easing.back(),
+              duration: 500,
+              useNativeDriver: false,
+            }),
+          ]).start(() => settabIndex(0));
+        });
       }
     },
     [tabIndex],
@@ -82,14 +101,16 @@ function AppointmentScreen() {
   const onTapTab1 = useCallback(
     function () {
       if (tabIndex === 0) {
-        Animated.sequence([
-          Animated.timing(tabIndexPos, {
-            toValue: 1,
-            easing: Easing.back(),
-            duration: 500,
-            useNativeDriver: false,
-          }),
-        ]).start(() => settabIndex(1));
+        InteractionManager.runAfterInteractions(() => {
+          Animated.sequence([
+            Animated.timing(tabIndexPos, {
+              toValue: 1,
+              easing: Easing.back(),
+              duration: 500,
+              useNativeDriver: false,
+            }),
+          ]).start(() => settabIndex(1));
+        });
       }
     },
     [tabIndex],
@@ -197,25 +218,13 @@ function AppointmentScreen() {
       <Header
         style={{
           Container: {
-            backgroundColor: '#7774F5',
             flex: 3,
           },
           ChildContainer: {
-            top: '-5%',
+            top: '0%',
           },
         }}
-        hideOverlay="true"
-        ProfileNavPic={
-          <RoundedImageHolder
-            style={{
-              ImageWrapper: {
-                height: 42,
-                width: 42,
-              },
-            }}
-            sourceUrl={require('../../assets/jpg/person1.jpg')}
-          />
-        }>
+        LeftNavComp={<NavBackCustom height={24} width={24} />}>
         <Text style={AppointmentScreenStyle.HeaderPrimaryText}>
           Appointment (8)
         </Text>
@@ -304,7 +313,16 @@ function AppointmentScreen() {
               <TimelineContainer
                 PatientName={item.PatientName}
                 Timing={item.Timing}
-                onPress={() => setTimeline(item._id)}
+                onPress={() => {
+                  LayoutAnimation.configureNext(
+                    LayoutAnimation.create(
+                      500,
+                      LayoutAnimation.Types.easeIn,
+                      LayoutAnimation.Properties.opacity,
+                    ),
+                  );
+                  setTimeline(item._id);
+                }}
                 Age={item.Age}
                 Disease={item.Disease}
                 Profile={item.Profile}

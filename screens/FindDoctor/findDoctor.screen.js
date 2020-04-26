@@ -3,15 +3,164 @@ import {View, StyleSheet, Text, Animated, Easing} from 'react-native';
 import Header from '../../components/header/header.component';
 import RoundedImageHolder from '../../components/RoundedImageHolder/roundedImageHolder.component';
 import BottomNavigation from '../../components/BottomNavigation/BottomNavigation.component';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import SearchBar from '../../components/SearchBar/searchbar.component';
 import BasicCard from '../../components/BasicCard/basicCard.component';
 
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import CardContent from './components/cardContent.component';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import ScheduleAppointment from './components/scheduleAppointment.component';
 import ToggleButton from '../../components/ToggleButton/toggleButton.component';
-import ContentContainer from '../../components/ContentContainer/contentContainer.component';
+
+/**
+ *
+ * CONTENT CONTAINER
+ *
+ */
+function ContentContainer({children, style}) {
+  return (
+    <View
+      style={[ContentContainerStyle.Container, style ? style.Container : null]}>
+      {children}
+    </View>
+  );
+}
+const ContentContainerStyle = StyleSheet.create({
+  Container: {
+    width: '100%',
+    backgroundColor: '#fefefe',
+    borderTopLeftRadius: 38,
+    borderTopRightRadius: 38,
+    transform: [
+      {
+        translateY: -60,
+      },
+    ],
+  },
+});
+
+/**
+ *
+ * Card Content
+ *
+ */
+
+function CardContent({Profile, DoctorName, rating, Specialization, onPress}) {
+  const ratingStars = (() => {
+    let arr = [];
+    let i, j;
+    for (i = 0; i < rating; i++) {
+      arr.push(
+        <FontAwesomeIcon key={i} name="star" size={12} color="#F4C130" />,
+      );
+    }
+    for (j = 0; j < 5 - rating; j++) {
+      arr.push(<Icon key={i + j} name="star" size={11} color="#F4C130" />);
+    }
+    return arr;
+  })();
+  return (
+    <>
+      <View style={CardContentStyles.AvailableDoctorsCardContent}>
+        {Profile}
+        <View style={CardContentStyles.AvailableDoctorsDetails}>
+          <View style={CardContentStyles.AvailableDoctorsNameContainer}>
+            <Text style={CardContentStyles.AvailableDoctorsName}>
+              {DoctorName}
+            </Text>
+            <View style={CardContentStyles.AvailableDoctorsRating}>
+              {ratingStars}
+            </View>
+          </View>
+          <Text style={CardContentStyles.AvailableDoctorsSpecialization}>
+            {Specialization}
+          </Text>
+          <View style={CardContentStyles.AvailableDoctorsAvailableTimes}>
+            <Text style={CardContentStyles.AvailableDoctorsAvailableTime}>
+              9:00
+            </Text>
+            <Text
+              style={[
+                CardContentStyles.AvailableDoctorsAvailableTime,
+                {
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  fontWeight: '600',
+                },
+              ]}>
+              11:00
+            </Text>
+            <Text
+              style={[
+                CardContentStyles.AvailableDoctorsAvailableTime,
+                {
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  fontWeight: '600',
+                },
+              ]}>
+              16:00
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View style={CardContentStyles.AvailableDoctorsContinueButton}>
+        <TouchableOpacity onPress={onPress}>
+          <FontAwesomeIcon name="arrow-right" size={18} color="#555" />
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+}
+const CardContentStyles = StyleSheet.create({
+  AvailableDoctorsCardContent: {
+    flexDirection: 'row',
+  },
+  AvailableDoctorsDetails: {
+    marginLeft: 10,
+  },
+  AvailableDoctorsNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  AvailableDoctorsName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#444',
+  },
+  AvailableDoctorsRating: {
+    flexDirection: 'row',
+    marginLeft: 5,
+  },
+  AvailableDoctorsSpecialization: {
+    color: '#666',
+  },
+  AvailableDoctorsAvailableTimes: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between',
+    marginTop: 5,
+  },
+  AvailableDoctorsAvailableTime: {
+    backgroundColor: '#F4C130',
+    padding: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderRadius: 10,
+    fontWeight: 'bold',
+    color: '#555',
+    marginRight: 10,
+  },
+  AvailableDoctorsContinueButton: {
+    backgroundColor: '#F4C130',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    padding: 6,
+    paddingRight: 12,
+    paddingLeft: 12,
+    borderBottomRightRadius: 15,
+    borderTopLeftRadius: 15,
+  },
+});
 
 function FindDoctorScreen({navigation}) {
   const [showPopup, setShowPopup] = useState(false);
@@ -29,204 +178,146 @@ function FindDoctorScreen({navigation}) {
   };
 
   return (
-    <View style={FindDoctorScreenStyles.Container}>
-      <Header
-        style={{
-          Container: {
-            backgroundColor: '#7774F5',
-            flex: 3,
-          },
-        }}
-        hideOverlay="true"
-        ProfileNavPic={
-          <RoundedImageHolder
-            style={{
-              ImageWrapper: {
-                height: 42,
-                width: 42,
-              },
-            }}
-            sourceUrl={require('../../assets/jpg/person1.jpg')}
-          />
-        }>
-        <Text style={FindDoctorScreenStyles.HeaderPrimaryText}>
-          Find a doctor
-        </Text>
-        <ToggleButton text="NOW" />
-      </Header>
-      <ContentContainer
-        style={{
-          Container: {
-            flex: 5,
-          },
-        }}>
-        <ScrollView style={{marginTop: 8}}>
-          <SearchBar />
-          <ScrollView
-            horizontal={true}
-            style={{
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              width: '90%',
-            }}
-            contentContainerStyle={FindDoctorScreenStyles.ContentCardContainer}>
-            <BasicCard
-              style={{
-                CardContainer: {
-                  backgroundColor: '#6231CB',
-                },
-              }}>
-              <Icon name="people" size={42} color="#fff" />
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  marginTop: 5,
-                }}>
-                Family Physicians
-              </Text>
-            </BasicCard>
-            <BasicCard
-              style={{
-                CardContainer: {},
-              }}>
-              <Icon name="people" size={42} color="#000" />
-              <Text
-                style={{
-                  color: '#000',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  marginTop: 5,
-                }}>
-                Pulmonologists
-              </Text>
-            </BasicCard>
-            <BasicCard
-              style={{
-                CardContainer: {},
-              }}>
-              <Icon name="heart" size={42} color="#000" />
-              <Text
-                style={{
-                  color: '#000',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  marginTop: 5,
-                }}>
-                Cardiologist
-              </Text>
-            </BasicCard>
-          </ScrollView>
-          <View style={FindDoctorScreenStyles.AvailableDoctors}>
-            <Text style={FindDoctorScreenStyles.AvailableDoctorsHeaderText}>
-              Available Doctors
-            </Text>
-            <View style={FindDoctorScreenStyles.AvailableDoctorsCardContainer}>
-              <BasicCard
-                style={{
-                  CardContainer: {
-                    marginLeft: 20,
-                    marginRight: 20,
-                    marginBottom: 15,
-                    alignItems: 'flex-start',
-                    height: 'auto',
-                    position: 'relative',
-                    paddingBottom: 25,
-                  },
-                }}>
-                <CardContent
-                  DoctorName="Dr.Haley"
-                  rating={4}
-                  onPress={() => navigation.navigate('DoctorDetails')}
-                  Specialization="General Dentist"
-                  Profile={
-                    <RoundedImageHolder
-                      sourceUrl={require('../../assets/jpg/person2.jpg')}
-                      style={{
-                        ImageWrapper: {
-                          height: 70,
-                          width: 70,
-                        },
-                      }}
-                    />
-                  }
-                />
+    <>
+      <View style={FindDoctorScreenStyles.Container}>
+        <Header
+          style={{
+            Container: {
+              flex: 3,
+            },
+          }}>
+          <Text style={FindDoctorScreenStyles.HeaderPrimaryText}>
+            Find a doctor
+          </Text>
+          <ToggleButton text="NOW" />
+        </Header>
+        <ContentContainer
+          style={{
+            Container: {
+              flex: 5,
+            },
+          }}>
+          <ScrollView style={{marginTop: 8}}>
+            <SearchBar />
+            <ScrollView
+              horizontal={true}
+              style={FindDoctorScreenStyles.CatagoryScroll}
+              contentContainerStyle={
+                FindDoctorScreenStyles.ContentCardContainer
+              }>
+              <BasicCard active={true}>
+                <Icon name="people" size={42} color="#fff" />
+                <Text
+                  style={[
+                    FindDoctorScreenStyles.CatagoryText,
+                    {color: '#fff'},
+                  ]}>
+                  Family Physicians
+                </Text>
               </BasicCard>
-              <BasicCard
-                style={{
-                  CardContainer: {
-                    marginLeft: 20,
-                    marginRight: 20,
-                    marginBottom: 15,
-                    alignItems: 'flex-start',
-                    height: 'auto',
-                    position: 'relative',
-                    paddingBottom: 25,
-                  },
-                }}>
-                <CardContent
-                  onPress={() => {
-                    onPress();
-                  }}
-                  DoctorName="Dr.Smith"
-                  rating={5}
-                  Specialization="Orthodontist"
-                  Profile={
-                    <RoundedImageHolder
-                      sourceUrl={require('../../assets/jpg/person4.jpg')}
-                      style={{
-                        ImageWrapper: {
-                          height: 70,
-                          width: 70,
-                        },
-                      }}
-                    />
-                  }
-                />
+              <BasicCard>
+                <Icon name="people" size={42} color="#000" />
+                <Text style={FindDoctorScreenStyles.CatagoryText}>
+                  Pulmonologists
+                </Text>
               </BasicCard>
-              <BasicCard
-                style={{
-                  CardContainer: {
-                    marginLeft: 20,
-                    marginRight: 20,
-                    marginBottom: 15,
-                    alignItems: 'flex-start',
-                    height: 'auto',
-                    position: 'relative',
-                    paddingBottom: 25,
-                  },
-                }}>
-                <CardContent
-                  onPress={() => {
-                    onPress();
-                  }}
-                  DoctorName="Dr.Smith"
-                  rating={5}
-                  Specialization="Orthodontist"
-                  Profile={
-                    <RoundedImageHolder
-                      sourceUrl={require('../../assets/jpg/person4.jpg')}
-                      style={{
-                        ImageWrapper: {
-                          height: 70,
-                          width: 70,
-                        },
-                      }}
-                    />
-                  }
-                />
+              <BasicCard>
+                <Icon name="heart" size={42} color="#000" />
+                <Text style={FindDoctorScreenStyles.CatagoryText}>
+                  Cardiologist
+                </Text>
               </BasicCard>
+            </ScrollView>
+            <View style={FindDoctorScreenStyles.AvailableDoctors}>
+              <Text style={FindDoctorScreenStyles.AvailableDoctorsHeaderText}>
+                Available Doctors
+              </Text>
+              <View
+                style={FindDoctorScreenStyles.AvailableDoctorsCardContainer}>
+                <BasicCard
+                  style={{
+                    CardContainer:
+                      FindDoctorScreenStyles.AvailableDoctorsBasicCard,
+                  }}>
+                  <CardContent
+                    DoctorName="Dr.Haley"
+                    rating={4}
+                    // onPress={}
+                    Specialization="General Dentist"
+                    Profile={
+                      <RoundedImageHolder
+                        sourceUrl={require('../../assets/jpg/person1.jpg')}
+                        style={{
+                          ImageWrapper: {
+                            height: 70,
+                            width: 70,
+                          },
+                        }}
+                      />
+                    }
+                  />
+                </BasicCard>
+                <BasicCard
+                  style={{
+                    CardContainer:
+                      FindDoctorScreenStyles.AvailableDoctorsBasicCard,
+                  }}>
+                  <CardContent
+                    onPress={() => {
+                      onPress();
+                    }}
+                    DoctorName="Dr.Smith"
+                    rating={5}
+                    Specialization="Orthodontist"
+                    Profile={
+                      <RoundedImageHolder
+                        sourceUrl={require('../../assets/jpg/person2.jpg')}
+                        style={{
+                          ImageWrapper: {
+                            height: 70,
+                            width: 70,
+                          },
+                        }}
+                      />
+                    }
+                  />
+                </BasicCard>
+                <BasicCard
+                  style={{
+                    CardContainer:
+                      FindDoctorScreenStyles.AvailableDoctorsBasicCard,
+                  }}>
+                  <CardContent
+                    onPress={() => {
+                      onPress();
+                    }}
+                    DoctorName="Dr.Smith"
+                    rating={5}
+                    Specialization="Orthodontist"
+                    Profile={
+                      <RoundedImageHolder
+                        sourceUrl={require('../../assets/jpg/person3.jpg')}
+                        style={{
+                          ImageWrapper: {
+                            height: 70,
+                            width: 70,
+                          },
+                        }}
+                      />
+                    }
+                  />
+                </BasicCard>
+              </View>
             </View>
-          </View>
-        </ScrollView>
-      </ContentContainer>
-      <BottomNavigation PopupTranslateY={PopupTranslateY} />
-      <ScheduleAppointment
-        PopupTranslateY={PopupTranslateY}
-        onPress={onPress}
-      />
-    </View>
+          </ScrollView>
+        </ContentContainer>
+        <BottomNavigation PopupTranslateY={PopupTranslateY} />
+        <ScheduleAppointment
+          PopupTranslateY={PopupTranslateY}
+          onPress={onPress}
+        />
+      </View>
+    </>
   );
 }
 
@@ -242,27 +333,34 @@ const FindDoctorScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: -10,
   },
-  // Content: {
-  //   // position: 'absolute',
-  //   width: '100%',
-  //   backgroundColor: '#fefefe',
-  //   // bottom: 0,
-  //   borderTopLeftRadius: 38,
-  //   borderTopRightRadius: 38,
-  //   transform: [
-  //     {
-  //       translateY: -60,
-  //     },
-  //   ],
-  // },
   ContentCardContainer: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
+    padding: 5,
+  },
+  CatagoryScroll: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '90%',
+  },
+  CatagoryText: {
+    color: '#000',
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 5,
   },
   AvailableDoctors: {
     flex: 1,
     marginTop: 10,
+  },
+  AvailableDoctorsBasicCard: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 15,
+    alignItems: 'flex-start',
+    height: 'auto',
+    position: 'relative',
+    paddingBottom: 25,
   },
   AvailableDoctorsHeaderText: {
     fontSize: 20,

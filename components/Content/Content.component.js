@@ -100,8 +100,8 @@ function Content({onPressSend}) {
               Container: {
                 paddingLeft: 50,
                 paddingRight: 50,
-                paddingTop: 30,
-                paddingBottom: 30,
+                paddingTop: 20,
+                paddingBottom: 20,
               },
             }}
           />
@@ -111,8 +111,8 @@ function Content({onPressSend}) {
               Container: {
                 paddingLeft: 50,
                 paddingRight: 50,
-                paddingTop: 30,
-                paddingBottom: 30,
+                paddingTop: 20,
+                paddingBottom: 20,
                 backgroundColor: '#E55F92',
                 elevation: 4,
               },

@@ -8,76 +8,63 @@ import {
   Text,
 } from 'react-native';
 
-import NavigationTopCustom from '../../components/NavigationTopCustom/navigationTopCustom.component';
+import TopNavBar from '../../components/TopNavBar/TopNavBar';
 
 import CustomButton from '../../components/CustomButton/CustomButton.component';
 import RoundedImageHolder from '../../components/RoundedImageHolder/roundedImageHolder.component';
+import Header from '../../components/header/header.component';
+import ContentContainer from '../../components/ContentContainer/contentContainer.component';
+
+import Semicircleblue from '../../assets/svg/semicircleblue.svg';
+import Squareblue from '../../assets/svg/squareblue.svg';
+import Squareyellow from '../../assets/svg/squareyellow.svg';
+import CurveFooter from '../../assets/svg/curve_footer.svg';
+import LinearGradient from 'react-native-linear-gradient';
+import {color} from '../../config/styles/color';
 
 function ProcessingMoneyScreen({navigation}) {
   const dimen = useWindowDimensions();
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#fff',
-      }}>
-      <View style={ProcessingMoneyScreenStyles.Upper}>
-        <NavigationTopCustom theme="dark" />
-        <Image
-          source={require('../../assets/png/semicirclepink.png')}
-          style={ProcessingMoneyScreenStyles.SemiPink}
+    <View style={ProcessingMoneyScreenStyles.Container}>
+      <Header
+        style={{
+          Container: {
+            flex: 2,
+          },
+        }}
+      />
+      <ContentContainer
+        style={{
+          Container: ProcessingMoneyScreenStyles.ContentContainer,
+        }}>
+        <Semicircleblue style={ProcessingMoneyScreenStyles.SemiBlue} />
+        <Squareblue style={ProcessingMoneyScreenStyles.SquareBlue} />
+        <Squareyellow style={ProcessingMoneyScreenStyles.SquareYellow} />
+        <Text style={ProcessingMoneyScreenStyles.HeroText}>
+          Sending Money {'\n'}
+          to Bella Campbell
+        </Text>
+        <CustomButton
+          title="$589"
+          disabled={true}
+          style={{
+            Touchable: ProcessingMoneyScreenStyles.CustomButton,
+          }}
         />
-        <Image
-          source={require('../../assets/png/semicircleblue.png')}
-          style={ProcessingMoneyScreenStyles.SemiBlue}
-        />
-        <Image
-          source={require('../../assets/png/squareping.png')}
-          style={ProcessingMoneyScreenStyles.SquarePink}
-        />
-        <Image
-          source={require('../../assets/png/squareblue.png')}
-          style={ProcessingMoneyScreenStyles.SquareBlue}
-        />
-        <View style={ProcessingMoneyScreenStyles.HeroSec}>
-          <View style={ProcessingMoneyScreenStyles.HeroSecTexts}>
-            <Text style={ProcessingMoneyScreenStyles.HeroSecText}>
-              Sending Money
-            </Text>
-            <Text style={ProcessingMoneyScreenStyles.HeroSecText}>
-              to Bella Campbell
-            </Text>
-          </View>
-          <View style={ProcessingMoneyScreenStyles.HeroSecButton}>
-            <CustomButton
-              title="$589"
-              disabled={true}
-              style={{
-                Container: {
-                  backgroundColor: '#efefef',
-                  paddingTop: 30,
-                  paddingBottom: 30,
-                },
-                Text: {
-                  fontSize: 20,
-                },
-              }}
-            />
-          </View>
-        </View>
-      </View>
-      <View style={ProcessingMoneyScreenStyles.Lower}>
-        <ImageBackground
-          style={ProcessingMoneyScreenStyles.ImageBackground}
-          source={require('../../assets/png/background.png')}>
+        <LinearGradient
+          colors={[color.header_grad_one, color.header_grad_two]}
+          useAngle={true}
+          angle={-180}
+          style={ProcessingMoneyScreenStyles.Footer}>
+          <CurveFooter style={ProcessingMoneyScreenStyles.FooterCurve} />
           <View style={ProcessingMoneyScreenStyles.ProfileImage}>
             <RoundedImageHolder
               index={0}
               sourceUrl={require('../../assets/jpg/person1.jpg')}
               style={{
                 ImageWrapper: {
-                  height: 120,
-                  width: 120,
+                  height: 100,
+                  width: 100,
                   borderRadius: 100,
                 },
               }}
@@ -85,13 +72,16 @@ function ProcessingMoneyScreen({navigation}) {
           </View>
           <CustomButton
             title="Confirm"
-            index={0}
             style={{
               Touchable: {
-                top: '60%',
+                top: '50%',
+                width: '80%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
               },
               Container: {
                 backgroundColor: '#E55F92',
+                padding: 20,
               },
               Text: {
                 color: '#fff',
@@ -99,83 +89,90 @@ function ProcessingMoneyScreen({navigation}) {
             }}
             onPress={() => navigation.navigate('TransactionSummary')}
           />
-        </ImageBackground>
-      </View>
+        </LinearGradient>
+      </ContentContainer>
     </View>
   );
 }
 const ProcessingMoneyScreenStyles = StyleSheet.create({
-  Upper: {
-    flex: 7,
-    backgroundColor: '#fff',
-  },
-  Lower: {
-    flex: 3,
-    justifyContent: 'flex-end',
-  },
-  ImageBackground: {
+  Container: {
     flex: 1,
-    resizeMode: 'contain',
+    backgroundColor: '#000',
+    alignItems: 'flex-end',
+  },
+  ContentContainer: {
+    flex: 5,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    transform: [
+      {
+        scaleY: 1.1,
+      },
+      {
+        translateY: -10,
+      },
+    ],
     position: 'relative',
-    paddingLeft: 25,
-    paddingRight: 25,
   },
   SemiBlue: {
     position: 'absolute',
-    top: '65%',
-    right: '6%',
+    top: '50%',
+    right: '8%',
+    zIndex: 100,
   },
-  SemiPink: {
+  SquareYellow: {
     position: 'absolute',
-    top: '20%',
-    left: '15%',
+    right: '6%',
+    top: '10%',
   },
   SquareBlue: {
     position: 'absolute',
-    top: '50%',
+    top: '30%',
     left: '10%',
   },
-  SquarePink: {
-    position: 'absolute',
-    top: '40%',
-    right: '10%',
-  },
-  HeroSec: {
+  HeroText: {
     flex: 1,
-    alignSelf: 'center',
-    top: '30%',
-  },
-  HeroSecTexts: {
-    marginBottom: 30,
-  },
-  HeroSecButton: {
-    marginTop: 30,
-  },
-  HeroSecLine: {
-    backgroundColor: 'red',
-    borderWidth: 2,
-  },
-  HeroSecText: {
     fontSize: 24,
     textAlign: 'center',
     letterSpacing: 0.5,
+    width: '60%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 10,
+  },
+  CustomButton: {
+    padding: 20,
+    width: 200,
+    marginBottom: 120,
+  },
+  Footer: {
+    flex: 2,
+    width: '100%',
+  },
+  FooterCurve: {
+    position: 'absolute',
+    top: '-45%',
+    left: '-8%',
+    zIndex: 10,
   },
   ProfileImage: {
     position: 'absolute',
-    top: '-50%',
-    left: '50%',
+    top: '-40%',
+    left: '45%',
     borderTopWidth: 2,
     borderLeftWidth: 2,
     borderRightWidth: 2,
     borderRadius: 80,
     padding: 5,
     borderColor: '#E55F92',
+    zIndex: 100,
     transform: [
       {
-        translateX: -45,
+        translateX: -40,
       },
       {
-        translateY: 40,
+        translateY: 30,
       },
     ],
   },
