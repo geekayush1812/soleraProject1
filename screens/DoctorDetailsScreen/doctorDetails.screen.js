@@ -105,6 +105,7 @@ const ConfirmAppointment = () => {
             </Text>
           </View>
         </View>
+        <Text style={ConfirmAppointmentStyles.InputLabel}>Patient Name</Text>
       </ScrollView>
     </View>
   );
@@ -141,6 +142,15 @@ const ConfirmAppointmentStyles = StyleSheet.create({
   Available: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  AvailableText: {
+    color: '#22C663',
+    marginLeft: 10,
+  },
+  InputLabel: {
+    fontSize: 18,
+    color: '#545454',
+    marginTop: 10,
   },
 });
 
