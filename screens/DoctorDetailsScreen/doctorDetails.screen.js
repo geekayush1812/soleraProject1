@@ -182,6 +182,8 @@ const ConfirmAppointmentStyles = StyleSheet.create({
 });
 
 function DoctorDetailsScreen() {
+  const [confirmAppointment, setConfirmAppointment] = useState(false);
+
   return (
     <View style={DoctorDetailsScreenStyles.Container}>
       <Header
