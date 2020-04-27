@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import Header from '../../components/header/header.component';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -7,6 +7,8 @@ import RoundedImageHolder from '../../components/RoundedImageHolder/roundedImage
 import {ScrollView} from 'react-native-gesture-handler';
 import BasicCard from '../../components/BasicCard/basicCard.component';
 import Available from '../../assets/svg/available.svg';
+import ConsultFeeIcon from '../../assets/svg/consult_fee_icon.svg';
+import TextInputCustom from '../../components/TextInput/TextInput.component';
 
 const DoctorProfile = () => {
   return (
@@ -106,6 +108,22 @@ const ConfirmAppointment = () => {
           </View>
         </View>
         <Text style={ConfirmAppointmentStyles.InputLabel}>Patient Name</Text>
+        <TextInputCustom placeholder="Name" textContentType="name" />
+        <Text style={ConfirmAppointmentStyles.InputLabel}>
+          Reason for visit
+        </Text>
+        <TextInputCustom placeholder="Reason" textContentType="name" />
+        <Text style={ConfirmAppointmentStyles.InputLabel}>Contact Number</Text>
+        <TextInputCustom
+          placeholder="Contact"
+          textContentType="telephoneNumber"
+          keyboardType="phone-pad"
+        />
+        <View style={ConfirmAppointmentStyles.ConsultFeeContainer}>
+          <ConsultFeeIcon />
+          <Text style={{marginLeft: 5}}>Consultation Fee</Text>
+          <Text style={{fontWeight: 'bold', marginLeft: 5}}>$250.00</Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -118,6 +136,7 @@ const ConfirmAppointmentStyles = StyleSheet.create({
   },
   ScrollView: {
     marginTop: 45,
+    marginBottom: 50,
   },
   ScheduleAvailability: {
     flexDirection: 'row',
@@ -151,6 +170,14 @@ const ConfirmAppointmentStyles = StyleSheet.create({
     fontSize: 18,
     color: '#545454',
     marginTop: 10,
+    marginLeft: 10,
+  },
+  ConsultFeeContainer: {
+    marginTop: 10,
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
