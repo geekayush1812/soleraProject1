@@ -11,8 +11,6 @@ function PicturelessAvatar({text, style}) {
 
 const Styles = StyleSheet.create({
   Container: {
-    minHeight: 50,
-    minWidth: 50,
     height: 50,
     width: 50,
     borderRadius: 50,

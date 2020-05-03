@@ -10,7 +10,6 @@ const CardStyles = StyleSheet.create({
     height: 80,
     width: 150,
     borderRadius: 10,
-    backgroundColor: 'rgba(255,255,255,0.5)',
   },
 });
 

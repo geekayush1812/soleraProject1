@@ -15,7 +15,7 @@ function ProgressTrack({ProgressVal, progressColor}) {
 
 const Styles = StyleSheet.create({
   Container: {
-    height: 10,
+    height: 4,
     width: '100%',
     backgroundColor: 'rgba(207, 206, 206, 0.56)',
   },

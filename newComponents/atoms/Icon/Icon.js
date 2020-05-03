@@ -13,6 +13,8 @@ const IconStyles = StyleSheet.create({
   Container: {
     minHeight: 30,
     minWidth: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 export default Icon;

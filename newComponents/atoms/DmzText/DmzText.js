@@ -1,12 +1,12 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
 
 function DmzText({text, children, style}) {
   return (
-    <Text style={[Styles.Container, {...style}]}>
-      {text}
+    <View style={{flexDirection: 'row'}}>
+      <Text style={[Styles.Container, {...style}]}>{text}</Text>
       {children}
-    </Text>
+    </View>
   );
 }
 
@@ -14,6 +14,7 @@ const Styles = StyleSheet.create({
   Container: {
     fontWeight: 'bold',
     fontSize: 14,
+    lineHeight: 30,
   },
 });
 export default DmzText;
