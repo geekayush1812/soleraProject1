@@ -4,7 +4,7 @@ import {Text, StyleSheet, View} from 'react-native';
 function DmzText({text, children, style}) {
   return (
     <View style={{flexDirection: 'row'}}>
-      <Text style={[Styles.Container, {...style}]}>{text}</Text>
+      <Text style={[Styles.Container, style ? style : null]}>{text}</Text>
       {children}
     </View>
   );

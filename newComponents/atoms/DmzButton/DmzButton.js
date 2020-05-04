@@ -5,7 +5,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 function DmzButton({text, icon = false, theme, onPress, style}) {
   return (
     <TouchableOpacity
-      style={[Styles.Container, style ? {...style.Container} : null]}
+      style={[Styles.Container, style ? style.Container : null]}
       onPress={onPress}>
       {icon ? icon : null}
       <Text

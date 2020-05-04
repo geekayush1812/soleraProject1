@@ -1,14 +1,32 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useRef, useEffect} from 'react';
+import {View, StyleSheet, Animated, Easing} from 'react-native';
 
 function ProgressTrack({ProgressVal, progressColor}) {
+  const animatedBar = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedBar, {
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.elastic(),
+      delay: 1000,
+      useNativeDriver: false,
+    }).start();
+  });
+
   return (
     <View style={[Styles.Container]}>
-      <View
+      <Animated.View
         style={[
           Styles.Progress,
-          {backgroundColor: progressColor, width: `${ProgressVal}%`},
-        ]}></View>
+          {
+            backgroundColor: progressColor,
+            width: animatedBar.interpolate({
+              inputRange: [0, 1],
+              outputRange: ['0%', `${ProgressVal}%`],
+            }),
+          },
+        ]}></Animated.View>
     </View>
   );
 }

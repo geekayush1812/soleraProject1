@@ -15,6 +15,7 @@ import MessagesScreen from './screens/Messages/Messages.screen';
 import Neumorphic from './screens/Neumorphic/Neumorphic.screen';
 import PatientProfile from './screens/PatientProfile/PatientProfile.screen';
 import PatientPurchase from './screens/PatientPurchase/PatientPurchase.screen';
+import PatientHealthInfo from './screens/PatientHealthInfo/PatientHealthInfo';
 
 const AppNavigator = createStackNavigator();
 
@@ -27,7 +28,7 @@ function App() {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName="PatientPurchase">
+          initialRouteName="PatientInfo">
           {/* <AppNavigator.Screen name="Neumorphic" component={Neumorphic} /> */}
           {/* <AppNavigator.Screen
             name="Transaction"
@@ -55,9 +56,13 @@ function App() {
             name="PatientProfile"
             component={PatientProfile}
           /> */}
-          <AppNavigator.Screen
+          {/* <AppNavigator.Screen
             name="PatientPurchase"
             component={PatientPurchase}
+          /> */}
+          <AppNavigator.Screen
+            name="PatientInfo"
+            component={PatientHealthInfo}
           />
         </AppNavigator.Navigator>
       </NavigationContainer>

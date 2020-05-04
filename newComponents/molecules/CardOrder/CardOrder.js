@@ -7,7 +7,7 @@ import ProgressTrack from '../../atoms/ProgressTrack/ProgressTrack';
 
 function CardOrder({active = false, style}) {
   const propStyle = active
-    ? {...style, backgroundColor: '#fff', elevation: 50}
+    ? {...style, backgroundColor: '#fff', elevation: 10}
     : {...style, backgroundColor: '#DED7D7', elevation: 1};
   return (
     <Card style={{...Styles.Container, ...propStyle}}>
@@ -67,6 +67,7 @@ const Styles = StyleSheet.create({
     width: 180,
     borderRadius: 16,
     padding: 15,
+    marginRight: 20,
   },
   CommonText: {
     lineHeight: null,
